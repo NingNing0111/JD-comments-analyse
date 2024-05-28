@@ -1,0 +1,6 @@
+server:
+  port: 8211
+
+hadoop:
+  hdfs-url: hdfs://localhost:9000
+  user: dr.who # 具有访问权限的用户
