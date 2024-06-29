@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import me.pgthinker.crawler.JdCrawler;
 import me.pgthinker.hadoop.HdfsClient;
 import me.pgthinker.hadoop.WordHandler;
+import me.pgthinker.util.WordCloudUtil;
 import org.springframework.stereotype.Service;
 
 import javax.websocket.Session;
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -50,5 +52,16 @@ public class AppService {
         }else{
             session.getBasicRemote().sendText("执行Hadoop 统计分析过程出现异常");
         }
+    }
+
+    public void exportWordCloud(Session session) throws IOException {
+        session.getBasicRemote().sendText("正在导出词云....");
+        String outputPath = "/output";
+        String fileName = "jd_comments_word_cloud.png";
+        Map<String, Integer> result = hdfsClient.getResultFromDfs(outputPath);
+        WordCloudUtil.createWordCloud(result,fileName,150);
+        File file = new File(fileName);
+        session.getBasicRemote().sendText("词云导出成功。");
+        session.getBasicRemote().sendText(file.getAbsolutePath());
     }
 }

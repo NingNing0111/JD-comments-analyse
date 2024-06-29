@@ -101,8 +101,11 @@ public class AppWebSocket {
             }
         }else if(message_str.equals("run analysis")){ // run analysis: 启动hadoop进行分析
             appService.runAnalysis(this.session);
+        }else if(message_str.equals("export wordCloud")){
+            appService.exportWordCloud(this.session);
         }else{
-            this.session.getBasicRemote().sendText("发送:run crawler [production_id] 即可爬取对应Id的产品评论;\n发送:run analysis 即可对爬取的结果进行分析 ");
+            this.session.getBasicRemote().sendText("发送:run crawler [production_id] 即可爬取对应Id的产品评论;\n发送:run analysis 即可对爬取的结果进行分析\n发送:export wordCloud 导出词云图片");
+
         }
     }
 
